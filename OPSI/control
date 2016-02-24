@@ -1,0 +1,66 @@
+[Package]
+version: 1
+depends: 
+incremental: False
+
+[Product]
+type: localboot
+id: dfn_kitty
+name: KiTTY
+description: Werkzeug für sichere Terminalverbindungen (SSH)
+advice: 
+version: 0.66
+priority: 0
+licenseRequired: False
+productClasses: 
+setupScript: setup32.opsiscript
+uninstallScript: uninstall32.opsiscript
+updateScript: 
+alwaysScript: 
+onceScript: 
+customScript: 
+userLoginScript: 
+
+[ProductProperty]
+type: unicode
+name: desktopicon
+multivalue: False
+editable: False
+description: Icon on Desktop
+values: ["no", "yes"]
+default: ["no"]
+
+[ProductProperty]
+type: unicode
+name: custom-post-install
+multivalue: False
+editable: False
+description: Define filename for include script in custom directory after installation
+values: ["none", "post-install.opsiinc"]
+default: ["none"]
+
+[ProductProperty]
+type: unicode
+name: custom-post-deinstall
+multivalue: False
+editable: False
+description: Define filename for include script in custom directory after deinstallation
+values: ["none", "post-deinstall.opsiinc"]
+default: ["none"]
+
+[Changelog]
+dfn_kitty (0.66-1)
+	* Initiales DFN-Paket
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 23.02.2016
+
+
+
+
+
+
+
+
+
+
+
+

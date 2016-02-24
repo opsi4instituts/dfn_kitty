@@ -1,0 +1,57 @@
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib gmbh
+; and published under the Terms of the General Public License.
+; credits: http://www.opsi.org/credits/
+
+Set $SearchPattern$ = $ProductId$
+; Parameter: $SearchPattern$ Suchbegriff in Registry
+Sub_search_registry32_uninstall_keys
+; Rückgabewert: $ResultList$ gefundene Einträge
+
+Switch count ($ResultList$)
+	Case "0"
+		comment "No installations of " + $SearchPattern$ + " found in $RegPathUninstall$. Nothing to do"
+	EndCase
+	Case "1"
+		Message "Uninstalling " + $ProductName$ + " 32 Bit..."
+		Set $RegId$ = takeString(0, $ResultList$)
+		comment "Found a version which was installed by just copying the files (like we do)
+		Set $UnInstallDir$ = GetRegistryStringValue32("[" + $RegPathUninstall$ + "\" + $RegId$ + "] InstallLocation")
+		Files_uninstall
+		Registry_uninstall /32Bit
+		LinkFolder_uninstall_programs
+
+		set $DesktopIcon$ = getProductProperty("desktopicon","no")
+		if $DesktopIcon$ = "yes"
+			comment "Delete common desktop icon"
+			Linkfolder_uninstall_desktopicon	
+		endif
+
+		comment "include custom post deinstall file"
+		set $CustomPostDeinstall$ = getProductProperty("custom-post-deinstall","none")
+		if not ($CustomPostDeinstall$ = "none")
+			if FileExists("%ScriptPath%\custom\" + $CustomPostDeinstall$)
+				include_insert "%ScriptPath%\custom\" + $CustomPostDeinstall$
+			endif
+		endif
+	EndCase
+	DefaultCase
+		logError "Found more than one installation! This case is not intended yet in this script! Stop now."
+		isFatalError
+	EndCase
+EndSwitch                    
+
+[Files_uninstall]
+delete -sf $UnInstallDir$
+
+[Linkfolder_uninstall_desktopicon]
+set_basefolder common_desktopdirectory
+set_subfolder ""
+delete_element $ProductName$
+	
+[LinkFolder_uninstall_programs]
+set_basefolder common_startmenu
+delete_subfolder "Programs\$ProductName$"
+	
+[Registry_uninstall]
+deletekey [$RegPathUninstall$\$ProductId$]

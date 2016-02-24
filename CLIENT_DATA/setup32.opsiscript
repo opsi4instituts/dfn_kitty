@@ -1,0 +1,94 @@
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib
+; and published under the Terms of the General Public License.
+; credits: http://www.opsi.org/credits/
+
+[Actions]
+
+include_insert "common.opsiinc"
+
+if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
+	LogError "Not enough space on %SystemDrive%, " + $MinimumSpace$ + " on drive %SystemDrive% needed for " + $ProductId$
+	isFatalError
+	; Stop process and set installation status to failed
+else
+	comment "Show product picture"
+	ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $ProductName$
+	
+	if FileExists("%ScriptPath%\delsub32.opsiscript")
+		comment "Start uninstall sub section"
+		Sub "%ScriptPath%\delsub32.opsiscript"
+	endif
+	
+	Message "Installing %installingProdName% (%installingProdVersion%) 32 Bit..."
+
+	comment "Copy files"
+	Files_install /32Bit
+	
+	if FileExists($PathToExe$)
+		comment "Successful Installation"
+	else
+		logError "Fatal: cannot find $PathToExe$ after installation"
+		isFatalError
+	endif
+	
+	comment "Patch Registry"
+	Registry_install /32Bit
+	
+	comment "Create shortcuts"
+	LinkFolder_install_programs
+
+	set $DesktopIcon$ = getProductProperty("desktopicon","no")
+	if $DesktopIcon$ = "yes"
+		comment "Create common desktop icon"
+		Linkfolder_install_desktopicon
+	endif
+	
+	comment "include custom post install file"
+	set $CustomPostInstall$ = getProductProperty("custom-post-install","none")
+	if not ($CustomPostInstall$ = "none")
+		if FileExists("%ScriptPath%\custom\" + $CustomPostInstall$)
+			include_insert "%ScriptPath%\custom\" + $CustomPostInstall$	
+		endif
+	endif
+endif
+
+[Files_install]
+copy -s "%ScriptPath%\files\*.*" "$InstallDir$"
+
+[Registry_install]
+; da wir keinen Installer nehmen, müssen ein paar notwendige Keys angelegt werden, damit sie unter 'Systemeinstellungen' > 'Software' auftaucht
+openkey [$RegPathUninstall$\$ProductId$]
+set "DisplayName" = REG_SZ:"$ProductId$ OPSI-Version: $ProductVersion$"
+set "DisplayIcon" = REG_SZ:"$PathToExe$"
+set "InstallLocation" = REG_SZ:"$InstallDir$"
+set "UninstallDirectory" = REG_SZ:"$InstallDir$"
+;UninstallString ist der entscheidende Eintrag, damit es überhaupt angezeigt wird!
+;da es in diesem Fall keine Deinstallationsroutine gibt, rufen wir ein VBS mit einem Hinweis auf
+set "UninstallString" = REG_SZ:'wscript "$InstallDir$\uninstall.vbs"'
+set "NoRepair" = REG_DWORD:0001
+set "NoModify" = REG_DWORD:0001
+
+[Linkfolder_install_desktopicon]
+set_basefolder common_desktopdirectory
+set_subfolder ""
+
+set_link
+	name: $ProductName$
+	target: $PathToExe$
+end_link
+
+[LinkFolder_install_programs]
+set_basefolder common_startmenu
+set_subfolder "Programs\$ProductName$"
+set_link
+	name: $ProductName$
+	target: "$PathToExe$"
+end_link
+
+set_link
+	name: "kageant"
+	target: "$InstallDir$\kageant.exe"
+end_link
+
+
