@@ -8,7 +8,7 @@
 include_insert "common.opsiinc"
 
 comment "Show product picture"
-ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $ProductName$
+ShowBitmap "%ScriptPath%\o4i.png" $ProductName$
 
 Message "Uninstalling " + $ProductName$ + " ..."
 

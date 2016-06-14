@@ -13,7 +13,7 @@ if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
 	; Stop process and set installation status to failed
 else
 	comment "Show product picture"
-	ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $ProductName$
+	ShowBitmap "%ScriptPath%\o4i.png" $ProductName$
 	
 	if FileExists("%ScriptPath%\delsub32.opsiscript")
 		comment "Start uninstall sub section"
