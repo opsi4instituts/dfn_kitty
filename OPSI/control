@@ -9,7 +9,7 @@ id: dfn_kitty
 name: KiTTY
 description: Werkzeug für sichere Terminalverbindungen (SSH)
 advice: 
-version: 0.67.1.3
+version: 0.67.1.4
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -49,6 +49,11 @@ values: ["none", "post-deinstall.opsiinc"]
 default: ["none"]
 
 [Changelog]
+dfn_kitty (0.67.1.4-1)
+        * neuer Upstream (Bugfix)
+	* o4i-Logo aktualisiert
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 30.09.2016
+
 dfn_kitty (0.67.1.3-1)
 	* neuer Upstream (Bugfix)
  -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 23.06.2016
