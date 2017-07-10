@@ -9,7 +9,7 @@ id: dfn_kitty
 name: KiTTY
 description: Werkzeug für sichere Terminalverbindungen (SSH)
 advice: 
-version: 0.68.0.1
+version: 0.69.0.2
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -49,6 +49,18 @@ values: ["none", "post-deinstall.opsiinc"]
 default: ["none"]
 
 [Changelog]
+dfn_kitty(0.69.0.2-1)
+	* neuer Upstream
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 10.07.2017
+
+dfn_kitty(0.69.0.1-1)
+	* neuer Upstream
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 29.05.2017
+
+dfn_kitty(0.68.0.2-1)
+	* neuer Upstream
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 16.03.2017
+
 dfn_kitty(0.68.0.1-1)
 	* neuer Upstream
  -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 13.03.2017
