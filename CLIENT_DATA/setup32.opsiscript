@@ -38,10 +38,10 @@ else
 	comment "Create shortcuts"
 	LinkFolder_install_programs
 
-	set $DesktopIcon$ = getProductProperty("desktopicon","no")
-	if $DesktopIcon$ = "yes"
-		comment "Create common desktop icon"
-		Linkfolder_install_desktopicon
+	set $DesktopLink$ = getProductProperty("desktop-link","False")
+	if $DesktopLink$ = "True"
+		comment "Create common desktop link"
+		Linkfolder_create_desktoplink
 	endif
 	
 	comment "include custom post install file"
@@ -69,7 +69,7 @@ set "UninstallString" = REG_SZ:'wscript "$InstallDir$\uninstall.vbs"'
 set "NoRepair" = REG_DWORD:0001
 set "NoModify" = REG_DWORD:0001
 
-[Linkfolder_install_desktopicon]
+[Linkfolder_create_desktoplink]
 set_basefolder common_desktopdirectory
 set_subfolder ""
 

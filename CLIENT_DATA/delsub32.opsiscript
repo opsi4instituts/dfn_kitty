@@ -21,10 +21,10 @@ Switch count ($ResultList$)
 		Registry_uninstall /32Bit
 		LinkFolder_uninstall_programs
 
-		set $DesktopIcon$ = getProductProperty("desktopicon","no")
-		if $DesktopIcon$ = "yes"
-			comment "Delete common desktop icon"
-			Linkfolder_uninstall_desktopicon	
+		set $DesktopLink$ = getProductProperty("desktop-link","False")
+		if $DesktopLink$ = "True"
+			comment "Delete common desktop link"
+			Linkfolder_delete_desktoplink	
 		endif
 
 		comment "include custom post deinstall file"
@@ -44,7 +44,7 @@ EndSwitch
 [Files_uninstall]
 delete -sf $UnInstallDir$
 
-[Linkfolder_uninstall_desktopicon]
+[Linkfolder_delete_desktoplink]
 set_basefolder common_desktopdirectory
 set_subfolder ""
 delete_element $ProductName$

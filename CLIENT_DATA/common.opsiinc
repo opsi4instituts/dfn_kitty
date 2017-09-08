@@ -16,7 +16,7 @@ DefVar $InstallDir$
 DefVar $ExitCode$
 DefVar $CustomPostInstall$
 DefVar $CustomPostDeinstall$
-DefVar $DesktopIcon$
+DefVar $DesktopLink$
 DefVar $PathToExe$
 DefVar $ProductVersion$
 DefVar $INST_SystemType$
