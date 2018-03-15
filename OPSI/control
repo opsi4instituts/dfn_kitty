@@ -9,7 +9,7 @@ id: dfn_kitty
 name: KiTTY
 description: Werkzeug für (sichere) Terminalverbindungen (insbesondere SSH) [Terminal emulator for (secure) connections (especially SSH)]
 advice: 
-version: 0.70.0.1
+version: 0.70.0.2
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -46,6 +46,12 @@ values: ["none", "post-deinstall.opsiinc"]
 default: ["none"]
 
 [Changelog]
+dfn_kitty(0.70.0.2-1)
+	* neuer Upstream
+	* alte uib Copyrights (Überbleibsel von opsi-template) entfernt
+	* o4i-Logo: nach common.opsiinc & eigenes Logo möglich
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 15.03.2018
+
 dfn_kitty(0.70.0.1-1)
 	* neuer Upstream
 	* Beschreibung auf Englisch (o4i-Richtlinie)
