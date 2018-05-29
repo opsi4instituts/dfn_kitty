@@ -30,7 +30,6 @@ else
 	comment "Create shortcuts"
 	LinkFolder_install_programs
 
-	set $DesktopLink$ = getProductProperty("desktop-link","False")
 	if $DesktopLink$ = "True"
 		comment "Create common desktop link"
 		Linkfolder_create_desktoplink

@@ -1,22 +1,21 @@
-Set $SearchPattern$ = $ProductId$
-; Parameter: $SearchPattern$ Suchbegriff in Registry
-Sub_search_registry32_uninstall_keys
-; Rückgabewert: $ResultList$ gefundene Einträge
+; Ergebnis ist StringList (mehrere Einträge möglich);
+; in einer Zeile werden drei Ergebnisse mit "|" abgetrennt geliefert: Registrykey (mit Pfad) | Bereich Registry (kann direkt getRegistryValue übergeben werden | DisplayName
+; z.B. HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Test64|64bit|Test Registry Entry64
+Set $ResultList$ = SearchRegistryUninstallKeys($ProductId$)
 
 Switch count ($ResultList$)
 	Case "0"
-		comment "No installations of " + $SearchPattern$ + " found in $RegPathUninstall$. Nothing to do"
+		comment "No installations of " + $ProductName$ + " found in registry. Nothing to do"
 	EndCase
 	Case "1"
 		Message "Uninstalling " + $ProductName$ + " 32 Bit..."
-		Set $RegId$ = takeString(0, $ResultList$)
-		comment "Found a version which was installed by just copying the files (like we do)
-		Set $UnInstallDir$ = GetRegistryStringValue32("[" + $RegPathUninstall$ + "\" + $RegId$ + "] InstallLocation")
+		Set $RegId$ = takeString (0,splitString(takeString(0,$ResultList$), '|'))
+		Set $RegBitScope$ = takeString (1,splitString(takeString(0,$ResultList$), '|'))
+		Set $UninstallDir$ = GetRegistryValue($RegId$, "InstallLocation", $RegBitScope$)
 		Files_uninstall
 		Registry_uninstall /32Bit
 		LinkFolder_uninstall_programs
 
-		set $DesktopLink$ = getProductProperty("desktop-link","False")
 		if $DesktopLink$ = "True"
 			comment "Delete common desktop link"
 			Linkfolder_delete_desktoplink	

@@ -1,8 +1,5 @@
-requiredWinstVersion >= "4.11.4.3"
+requiredWinstVersion >= "4.12.0.16"
 
-setloglevel = 6
-
-DefVar $RegPathUninstall$
 DefVar $LogDir$
 DefVar $ProductId$
 DefVar $ProductName$
@@ -14,17 +11,19 @@ DefVar $CustomPostDeinstall$
 DefVar $DesktopLink$
 DefVar $PathToExe$
 DefVar $ProductVersion$
-DefVar $INST_SystemType$
 DefVar $MSVersion$
 DefVar $SearchPattern$
 DefVar $RegId$
+DefVar $RegBitScope$
+DefVar $RegPathUninstall$
 DefVar $UnInstallDir$
 DefStringlist $ResultList$
 
 Set $LogDir$ = "%opsiLogDir%"
 
-Set $INST_SystemType$ = GetSystemType
 Set $MSVersion$	 = GetMsVersionInfo
+
+Set $DesktopLink$ = getProductProperty("desktop-link","False")
 
 ; ----------------------------------------------------------------
 Set $ProductId$ 	= "kitty"
@@ -36,10 +35,11 @@ Set $ProductVersion$ 	= "%installingProdVersion%"
 Set $RegPathUninstall$  = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
 ; ----------------------------------------------------------------
 
-include_append "section_sub_search_registry32_uninstall_keys.opsiinc"
+; Library registry search uninstall keys (local functions)
+importLib "func_search_registry_uninstall_keys.opsiinc"
 
-if not ($MSVersion$ = "6.1" OR $MSVersion$ = "10.0")
-	Logwarning "Only tested with windows 7 and 10! Please report to the maintainer successful installation on other windows versions."		
+if not ($MSVersion$ = "10.0")
+	Logwarning "Only tested with 10! Please report to the maintainer successful installation on other windows versions."		
 endif
 
 comment "Show product picture"
