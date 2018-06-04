@@ -8,7 +8,7 @@ id: dfn_kitty
 name: KiTTY
 description: Werkzeug für (sichere) Terminalverbindungen (insbesondere SSH) [Terminal emulator for (secure) connections (especially SSH)]
 advice: 
-version: 0.70.0.4
+version: 0.70.0.5
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -45,6 +45,10 @@ values: ["none", "post-deinstall.opsiinc"]
 default: ["none"]
 
 [Changelog]
+dfn_kitty(0.70.0.5-1)
+	* neuer Upstream
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 04.06.2018
+
 dfn_kitty(0.70.0.4-1)
 	* neuer Upstream
 	* neue Regsuche (universell, 32- wie 64-bit, local function, required-winst-version 4.12.0.16)
