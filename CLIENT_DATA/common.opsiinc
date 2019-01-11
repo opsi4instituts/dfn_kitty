@@ -22,7 +22,7 @@ DefStringlist $ResultList$
 Set $LogDir$ = "%opsiLogDir%"
 
 Set $MSVersion$	 = GetMsVersionInfo
-
+Set $ProductVersion$ = takestring (0, splitString("%installingProdVersion%", "-"))
 Set $DesktopLink$ = getProductProperty("desktop-link","False")
 
 ; ----------------------------------------------------------------
@@ -31,7 +31,6 @@ Set $ProductName$ 	= "KiTTY"
 Set $MinimumSpace$ 	= "2 MB"
 Set $InstallDir$	= "%ProgramFiles32Dir%\" + $ProductId$
 Set $PathToExe$  = $InstallDir$ + "\kitty.exe"
-Set $ProductVersion$ 	= "%installingProdVersion%"
 Set $RegPathUninstall$  = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
 ; ----------------------------------------------------------------
 

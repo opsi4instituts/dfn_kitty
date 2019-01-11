@@ -50,7 +50,8 @@ copy -s "%ScriptPath%\files\*.*" "$InstallDir$"
 [Registry_install]
 ; da wir keinen Installer nehmen, müssen ein paar notwendige Keys angelegt werden, damit sie unter 'Systemeinstellungen' > 'Software' auftaucht
 openkey [$RegPathUninstall$\$ProductId$]
-set "DisplayName" = REG_SZ:"$ProductId$ OPSI-Version: $ProductVersion$"
+set "DisplayName" = REG_SZ:"$ProductName$ (installed by OPSI)"
+set "DisplayVersion" = REG_SZ:"$ProductVersion$"
 set "DisplayIcon" = REG_SZ:"$PathToExe$"
 set "InstallLocation" = REG_SZ:"$InstallDir$"
 set "UninstallDirectory" = REG_SZ:"$InstallDir$"
